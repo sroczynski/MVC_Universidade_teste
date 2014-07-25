@@ -1,0 +1,60 @@
+﻿@model MvcApplication1.Models.NotasDB
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<h2>Criar</h2>
+
+<div class="acoes">
+    @using (Html.BeginForm("Create", "Notas", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Notas</legend>
+
+
+            @Html.HiddenFor(model => model.alunoID)
+
+            <div class="editor-label">
+                <b>aluno</b>
+            </div>
+
+            <div class="editor-field">
+                @Html.DropDownList("aluno")
+            </div>
+
+            <div class="editor-label">
+                <b>Disciplina</b>
+            </div>
+
+            <div class="editor-field">
+                @Html.DropDownList("disciplina")
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.nota)
+            </div>
+
+            <div class="editor-field">
+                @Html.EditorFor(model => model.nota)
+                @Html.ValidationMessageFor(model => model.nota)
+            </div>
+
+            <br />
+
+            <p>
+                <input class="btn btn-success" type="submit" value="Create" />
+                @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+            </p>
+        </fieldset>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

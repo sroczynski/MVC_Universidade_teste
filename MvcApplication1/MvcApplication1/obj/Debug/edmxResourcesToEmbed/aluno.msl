@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TESTEModelStoreContainer" CdmEntityContainer="TESTEEntities">
+    <EntitySetMapping Name="aluno">
+      <EntityTypeMapping TypeName="TESTEModel.aluno">
+        <MappingFragment StoreEntitySet="aluno">
+          <ScalarProperty Name="alunoID" ColumnName="alunoID" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="dataNascimento" ColumnName="dataNascimento" />
+          <ScalarProperty Name="cursoID" ColumnName="cursoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="curso">
+      <EntityTypeMapping TypeName="TESTEModel.curso">
+        <MappingFragment StoreEntitySet="curso">
+          <ScalarProperty Name="cursoID" ColumnName="cursoID" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="universidadeID" ColumnName="universidadeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="disciplina">
+      <EntityTypeMapping TypeName="TESTEModel.disciplina">
+        <MappingFragment StoreEntitySet="disciplina">
+          <ScalarProperty Name="disciplinaID" ColumnName="disciplinaID" />
+          <ScalarProperty Name="cursoID" ColumnName="cursoID" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="notas">
+      <EntityTypeMapping TypeName="TESTEModel.notas">
+        <MappingFragment StoreEntitySet="notas">
+          <ScalarProperty Name="alunoID" ColumnName="alunoID" />
+          <ScalarProperty Name="disciplinaID" ColumnName="disciplinaID" />
+          <ScalarProperty Name="nota" ColumnName="nota" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="universidade">
+      <EntityTypeMapping TypeName="TESTEModel.universidade">
+        <MappingFragment StoreEntitySet="universidade">
+          <ScalarProperty Name="universidadeID" ColumnName="universidadeID" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="cidade" ColumnName="cidade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

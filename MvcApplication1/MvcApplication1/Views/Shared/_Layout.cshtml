@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="geral">
+        <div id="top">
+            <h3>@Html.ActionLink("MVC", "Index", "Home")</h3>
+        </div>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="collapse navbar-collapse" id="bar1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        @Html.ActionLink("Página Inicial", "Index", "Home")
+                    </li>
+                    
+                    <li>
+                        @Html.ActionLink("Alunos", "Index", "Aluno")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Universidade", "Index", "Universidade")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Cursos", "Index", "Curso")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Disciplinas", "Index", "Disciplina")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Notas", "Index", "Notas")
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="views" class="row-fluid">
+
+            @RenderBody()
+
+        </div>
+
+        <footer>
+            <p></p>
+        </footer>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/DDL")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

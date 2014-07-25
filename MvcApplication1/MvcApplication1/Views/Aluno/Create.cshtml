@@ -1,0 +1,79 @@
+﻿@model MvcApplication1.Models.AlunoDB
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Criar</h2>
+
+
+
+@using (Html.BeginForm("Create", "aluno", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Aluno</h2>
+        </div>
+        <div class="acoes panel body">
+            <fieldset>
+                <legend>AlunoDB</legend>
+
+                @Html.HiddenFor(model => model.cursoID)
+                @Html.HiddenFor(model => model.universidadeID)
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.alunoNome)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.alunoNome)
+                    @Html.ValidationMessageFor(model => model.alunoNome)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.alunoEmail)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.alunoEmail)
+                    @Html.ValidationMessageFor(model => model.alunoEmail)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.dataNascimento)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.dataNascimento)
+                    @Html.ValidationMessageFor(model => model.dataNascimento)
+                </div>
+
+                <div class="editor-label">
+                    <b>Universidade</b>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("universidade")
+                </div>
+
+                <div class="editor-label">
+                    <b>Curso</b><br />
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("curso")
+                </div>
+
+                <br />
+
+                <p>
+                    <input class="btn btn-success" type="submit" value="Criar" />
+                    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+                </p>
+            </fieldset>
+
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

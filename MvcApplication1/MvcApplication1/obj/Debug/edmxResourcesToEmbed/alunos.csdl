@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TESTEModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DBTeste" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="alunoes" EntityType="TESTEModel.aluno" />
+    <EntitySet Name="cursoes" EntityType="TESTEModel.curso" />
+    <EntitySet Name="disciplinas" EntityType="TESTEModel.disciplina" />
+    <EntitySet Name="notas" EntityType="TESTEModel.nota" />
+    <EntitySet Name="universidades" EntityType="TESTEModel.universidade" />
+    <AssociationSet Name="FK_aluno_curso" Association="TESTEModel.FK_aluno_curso">
+      <End Role="curso" EntitySet="cursoes" />
+      <End Role="aluno" EntitySet="alunoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notas_aluno" Association="TESTEModel.FK_notas_aluno">
+      <End Role="aluno" EntitySet="alunoes" />
+      <End Role="notas" EntitySet="notas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_curso_universidade" Association="TESTEModel.FK_curso_universidade">
+      <End Role="universidade" EntitySet="universidades" />
+      <End Role="curso" EntitySet="cursoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_disciplina_curso" Association="TESTEModel.FK_disciplina_curso">
+      <End Role="curso" EntitySet="cursoes" />
+      <End Role="disciplina" EntitySet="disciplinas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notas_disciplina" Association="TESTEModel.FK_notas_disciplina">
+      <End Role="disciplina" EntitySet="disciplinas" />
+      <End Role="notas" EntitySet="notas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="aluno">
+    <Key>
+      <PropertyRef Name="alunoID" />
+    </Key>
+    <Property Name="alunoID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="dataNascimento" Type="DateTime" Precision="0" />
+    <Property Name="cursoID" Type="Int32" />
+    <NavigationProperty Name="curso" Relationship="TESTEModel.FK_aluno_curso" FromRole="aluno" ToRole="curso" />
+    <NavigationProperty Name="notas" Relationship="TESTEModel.FK_notas_aluno" FromRole="aluno" ToRole="notas" />
+  </EntityType>
+  <EntityType Name="curso">
+    <Key>
+      <PropertyRef Name="cursoID" />
+    </Key>
+    <Property Name="cursoID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="universidadeID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="alunoes" Relationship="TESTEModel.FK_aluno_curso" FromRole="curso" ToRole="aluno" />
+    <NavigationProperty Name="universidade" Relationship="TESTEModel.FK_curso_universidade" FromRole="curso" ToRole="universidade" />
+    <NavigationProperty Name="disciplinas" Relationship="TESTEModel.FK_disciplina_curso" FromRole="curso" ToRole="disciplina" />
+  </EntityType>
+  <EntityType Name="disciplina">
+    <Key>
+      <PropertyRef Name="disciplinaID" />
+    </Key>
+    <Property Name="disciplinaID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="cursoID" Type="Int32" />
+    <Property Name="nome" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="curso" Relationship="TESTEModel.FK_disciplina_curso" FromRole="disciplina" ToRole="curso" />
+    <NavigationProperty Name="notas" Relationship="TESTEModel.FK_notas_disciplina" FromRole="disciplina" ToRole="notas" />
+  </EntityType>
+  <EntityType Name="nota">
+    <Key>
+      <PropertyRef Name="alunoID" />
+      <PropertyRef Name="disciplinaID" />
+    </Key>
+    <Property Name="alunoID" Type="Int32" Nullable="false" />
+    <Property Name="disciplinaID" Type="Int32" Nullable="false" />
+    <Property Name="nota1" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="aluno" Relationship="TESTEModel.FK_notas_aluno" FromRole="notas" ToRole="aluno" />
+    <NavigationProperty Name="disciplina" Relationship="TESTEModel.FK_notas_disciplina" FromRole="notas" ToRole="disciplina" />
+  </EntityType>
+  <EntityType Name="universidade">
+    <Key>
+      <PropertyRef Name="universidadeID" />
+    </Key>
+    <Property Name="universidadeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="cidade" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="cursoes" Relationship="TESTEModel.FK_curso_universidade" FromRole="universidade" ToRole="curso" />
+  </EntityType>
+  <Association Name="FK_aluno_curso">
+    <End Role="curso" Type="TESTEModel.curso" Multiplicity="0..1" />
+    <End Role="aluno" Type="TESTEModel.aluno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="cursoID" />
+      </Principal>
+      <Dependent Role="aluno">
+        <PropertyRef Name="cursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notas_aluno">
+    <End Role="aluno" Type="TESTEModel.aluno" Multiplicity="1" />
+    <End Role="notas" Type="TESTEModel.nota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aluno">
+        <PropertyRef Name="alunoID" />
+      </Principal>
+      <Dependent Role="notas">
+        <PropertyRef Name="alunoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_curso_universidade">
+    <End Role="universidade" Type="TESTEModel.universidade" Multiplicity="1" />
+    <End Role="curso" Type="TESTEModel.curso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="universidade">
+        <PropertyRef Name="universidadeID" />
+      </Principal>
+      <Dependent Role="curso">
+        <PropertyRef Name="universidadeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_disciplina_curso">
+    <End Role="curso" Type="TESTEModel.curso" Multiplicity="0..1" />
+    <End Role="disciplina" Type="TESTEModel.disciplina" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="curso">
+        <PropertyRef Name="cursoID" />
+      </Principal>
+      <Dependent Role="disciplina">
+        <PropertyRef Name="cursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notas_disciplina">
+    <End Role="disciplina" Type="TESTEModel.disciplina" Multiplicity="1" />
+    <End Role="notas" Type="TESTEModel.nota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="disciplina">
+        <PropertyRef Name="disciplinaID" />
+      </Principal>
+      <Dependent Role="notas">
+        <PropertyRef Name="disciplinaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

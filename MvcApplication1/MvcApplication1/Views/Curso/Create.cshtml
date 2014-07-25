@@ -1,0 +1,44 @@
+﻿@model MvcApplication1.Models.CursoDB
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Criar</h2>
+
+<div class="acoes">
+    @using (Html.BeginForm("Create", "curso", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>CursoDB</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.nome)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.nome)
+                @Html.ValidationMessageFor(model => model.nome)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.universidadeID)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("listaUniversidade")
+            </div>
+            <br />
+            <p>
+                <input class="btn btn-success" type="submit" value="Create" />
+                @Html.ActionLink("Voltar", "Index", null, new {@class = "btn btn-default"})
+            </p>
+        </fieldset>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

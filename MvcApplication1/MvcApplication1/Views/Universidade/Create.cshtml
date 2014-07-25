@@ -1,0 +1,51 @@
+﻿@model MvcApplication1.Models.UniversidadeDB
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Criar</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Universidade</h2>
+    </div>
+    <div class="acoes panel body">
+        @using (Html.BeginForm("Create", "Universidade", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>UniversidadeDB</legend>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.nome)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.nome)
+                    @Html.ValidationMessageFor(model => model.nome)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.cidade)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.cidade)
+                    @Html.ValidationMessageFor(model => model.cidade)
+                </div>
+                <br />
+                <p>
+                    <input class="btn btn-success" type="submit" value="Create" />
+                    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+                </p>
+            </fieldset>
+        }
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,47 @@
+﻿@model MvcApplication1.Models.NotasDB
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Notas</h2>
+    </div>
+    <div class="acoes panel body">
+        @using (Html.BeginForm("Edit", "Notas", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>Notas</legend>
+
+                @Html.HiddenFor(model => model.alunoID)
+                @Html.HiddenFor(model => model.disciplinaID)
+
+                <div class="editor-label">
+                    @Html.DisplayFor(model => model.alunoNome)
+                </div>
+                <div class="editor-label">
+                    @Html.DisplayFor(model => model.disciplinaNome)
+                </div>
+
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.nota)
+                    @Html.ValidationMessageFor(model => model.nota)
+                </div>
+                <br />
+                <p>
+                    <input class="btn btn-success" type="submit" value="Save" />|
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+                </p>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

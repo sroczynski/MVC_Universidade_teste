@@ -1,0 +1,31 @@
+﻿@model MvcApplication1.Models.UniversidadeDB
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Universidade</h2>
+    </div>
+    <div class="acoes panel body">
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>@Html.DisplayNameFor(model => model.nome)</th>
+                <th>@Html.DisplayNameFor(model => model.cidade)</th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(model => model.universidadeID)</td>
+                <td>@Html.DisplayFor(model => model.nome)</td>
+                <td>@Html.DisplayFor(model => model.cidade)</td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.universidadeID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+</p>

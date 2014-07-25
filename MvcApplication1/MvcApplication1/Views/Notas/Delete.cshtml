@@ -1,0 +1,52 @@
+﻿@model MvcApplication1.Models.NotasDB
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+@Html.AntiForgeryToken()
+
+<h3>Deseja realmente deletar esta nota</h3>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Notas</h2>
+    </div>
+    <div class="acoes panel body">
+        <table class="table">
+            <tr>
+                <td>#ID</td>
+                <td>@Html.DisplayFor(model => model.alunoID)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.alunoNome):</td>
+                <td>@Html.DisplayFor(model => model.alunoNome)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.disciplinaNome):</td>
+                <td>@Html.DisplayFor(model => model.disciplinaNome)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.nota):</td>
+                <td>@Html.DisplayFor(model => model.nota)</td>
+            </tr>
+        </table>
+
+
+
+        @using (Html.BeginForm("Delete", "Notas", FormMethod.Post, new { alunoID = Model.alunoID, disciplinaID = Model.disciplinaID }))
+        {
+            @Html.HiddenFor(model => model.alunoID)
+            @Html.HiddenFor(model => model.disciplinaID)
+            <p>
+                <input class="btn btn-danger" type="submit" value="Delete" />
+                |
+        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+            </p>
+        }
+    </div>
+</div>

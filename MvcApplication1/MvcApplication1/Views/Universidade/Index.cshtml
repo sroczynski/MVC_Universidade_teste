@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<MvcApplication1.Models.UniversidadeDB>
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @Html.ActionLink("Nova universidade", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Voltar para Home", "Index", "Home", null, new { @class = "btn btn-default" })
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Universidade</h2>
+    </div>
+    <div class="acoes panel body">
+        @using (Html.BeginForm("Index", "Universidade", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("busca", ViewBag.filtro as string,new { @class ="busca"})
+                <input type="submit" value="Buscar" class="btn btn-default" />
+            </p>
+        }
+        <br />
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.ActionLink("Nome", "Index", new { ordem = ViewBag.nome, filtro = ViewBag.filtro })
+                </th>
+                <th>
+                    @Html.ActionLink("Cidade", "Index", new { ordem = ViewBag.cidade, filtro = ViewBag.filtro })
+                </th>
+                <th>
+                    <!-- empty -->
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cidade)
+                    </td>
+                    <td id="td-botoes">
+                        @Html.ActionLink("Detalhar", "Details", new { id = item.universidadeID }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.universidadeID }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Excluir", "Delete", new { id = item.universidadeID }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <p>
+            Página 
+            @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            de 
+            @Model.PageCount
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, ordem = ViewBag.ordemCorrente, filtro = ViewBag.filtro }))
+        </p>
+    </div>
+</div>
+

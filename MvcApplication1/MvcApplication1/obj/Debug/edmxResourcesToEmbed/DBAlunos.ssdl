@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TESTEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TESTEModelStoreContainer">
+    <EntitySet Name="Aluno" EntityType="TESTEModel.Store.Aluno" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Curso" EntityType="TESTEModel.Store.Curso" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Disciplina" EntityType="TESTEModel.Store.Disciplina" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notas" EntityType="TESTEModel.Store.Notas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Universidade" EntityType="TESTEModel.Store.Universidade" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_aluno_curso" Association="TESTEModel.Store.FK_aluno_curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="Aluno" EntitySet="Aluno" />
+    </AssociationSet>
+    <AssociationSet Name="FK_curso_universidade" Association="TESTEModel.Store.FK_curso_universidade">
+      <End Role="Universidade" EntitySet="Universidade" />
+      <End Role="Curso" EntitySet="Curso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_disciplina_curso" Association="TESTEModel.Store.FK_disciplina_curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="Disciplina" EntitySet="Disciplina" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notas_aluno" Association="TESTEModel.Store.FK_notas_aluno">
+      <End Role="Aluno" EntitySet="Aluno" />
+      <End Role="Notas" EntitySet="Notas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_notas_disciplina" Association="TESTEModel.Store.FK_notas_disciplina">
+      <End Role="Disciplina" EntitySet="Disciplina" />
+      <End Role="Notas" EntitySet="Notas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Aluno">
+    <Key>
+      <PropertyRef Name="alunoID" />
+    </Key>
+    <Property Name="alunoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="dataNascimento" Type="date" />
+    <Property Name="cursoID" Type="int" />
+  </EntityType>
+  <EntityType Name="Curso">
+    <Key>
+      <PropertyRef Name="cursoID" />
+    </Key>
+    <Property Name="cursoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="universidadeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Disciplina">
+    <Key>
+      <PropertyRef Name="disciplinaID" />
+    </Key>
+    <Property Name="disciplinaID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="cursoID" Type="int" />
+    <Property Name="nome" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Notas">
+    <Key>
+      <PropertyRef Name="alunoID" />
+      <PropertyRef Name="disciplinaID" />
+    </Key>
+    <Property Name="alunoID" Type="int" Nullable="false" />
+    <Property Name="disciplinaID" Type="int" Nullable="false" />
+    <Property Name="nota" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Universidade">
+    <Key>
+      <PropertyRef Name="universidadeID" />
+    </Key>
+    <Property Name="universidadeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="cidade" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_aluno_curso">
+    <End Role="Curso" Type="TESTEModel.Store.Curso" Multiplicity="0..1" />
+    <End Role="Aluno" Type="TESTEModel.Store.Aluno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="cursoID" />
+      </Principal>
+      <Dependent Role="Aluno">
+        <PropertyRef Name="cursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_curso_universidade">
+    <End Role="Universidade" Type="TESTEModel.Store.Universidade" Multiplicity="1" />
+    <End Role="Curso" Type="TESTEModel.Store.Curso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Universidade">
+        <PropertyRef Name="universidadeID" />
+      </Principal>
+      <Dependent Role="Curso">
+        <PropertyRef Name="universidadeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_disciplina_curso">
+    <End Role="Curso" Type="TESTEModel.Store.Curso" Multiplicity="0..1" />
+    <End Role="Disciplina" Type="TESTEModel.Store.Disciplina" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="cursoID" />
+      </Principal>
+      <Dependent Role="Disciplina">
+        <PropertyRef Name="cursoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notas_aluno">
+    <End Role="Aluno" Type="TESTEModel.Store.Aluno" Multiplicity="1" />
+    <End Role="Notas" Type="TESTEModel.Store.Notas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Aluno">
+        <PropertyRef Name="alunoID" />
+      </Principal>
+      <Dependent Role="Notas">
+        <PropertyRef Name="alunoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_notas_disciplina">
+    <End Role="Disciplina" Type="TESTEModel.Store.Disciplina" Multiplicity="1" />
+    <End Role="Notas" Type="TESTEModel.Store.Notas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Disciplina">
+        <PropertyRef Name="disciplinaID" />
+      </Principal>
+      <Dependent Role="Notas">
+        <PropertyRef Name="disciplinaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

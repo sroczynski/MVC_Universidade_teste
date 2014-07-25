@@ -1,0 +1,51 @@
+﻿@model MvcApplication1.Models.CursoDB
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+@Html.AntiForgeryToken()
+
+<h3>Deseja realmente deletar este curso?</h3>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Curso</h2>
+    </div>
+    <div class="acoes panel body">
+        <table class="table">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.cursoID):</td>
+                <td>@Html.DisplayFor(model => model.cursoID)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.nome):</td>
+                <td>@Html.DisplayFor(model => model.nome)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.universidadeID):</td>
+                <td>@Html.DisplayFor(model => model.universidadeID)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.universidadeNome):</td>
+                <td>@Html.DisplayFor(model => model.universidadeNome)</td>
+            </tr>
+
+        </table>
+
+        <br />
+        @using (Html.BeginForm("Delete", "Curso", FormMethod.Post, new { id = Model.cursoID }))
+        {
+            <p>
+                <input class="btn btn-danger" type="submit" value="Delete" />
+                |
+        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+            </p>
+        }
+    </div>
+</div>
+

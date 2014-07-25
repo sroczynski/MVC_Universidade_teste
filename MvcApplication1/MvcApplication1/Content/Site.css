@@ -1,0 +1,139 @@
+﻿body {
+    margin: 0px;
+    font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #e0e0e0;
+}
+
+
+header, footer, nav, section {
+    display: block;
+}
+
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* Minhas alterações
+-----------------------------------------------------------*/
+html {
+    background-color:white;
+}
+li {
+    text-decoration-style: none;
+}
+
+tr td {
+    padding: 5px;
+    padding-right: 10px;
+}
+
+
+#top {
+    
+    width: 100%;
+    text-align: center;
+}
+
+#menu {
+    background-color: white;
+    font-size: 16px;
+    width: 200px;
+    padding: 25px;
+    float: left;
+}
+
+.table {
+    width:1150px;
+}
+#td-botoes {
+    text-align:right;
+}
+
+html a {
+    text-decoration: none;
+    color: black;
+}
+
+
+html a:hover {
+    text-decoration: none;
+    color: #ff6a00;
+}
+
+#views {
+    padding: 20px 20px 20px 20px;
+    float: left;
+}
+
+.acoes {
+    padding: 15px 50px 0px 50px;
+}
+
+
+.text-box, select {
+    width: 200px;
+    height: 25px;
+}
+
+.busca {
+    width:150px;
+    transition: width 1s;
+}
+.busca:focus{
+    width:250px;
+}
+
+#geral {
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+}

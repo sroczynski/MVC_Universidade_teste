@@ -1,0 +1,55 @@
+﻿@model MvcApplication1.Models.CursoDB
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Curso</h2>
+    </div>
+    <div class="acoes panel body">
+
+        @using (Html.BeginForm("Edit", "Curso", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>curso</legend>
+
+                @Html.HiddenFor(model => model.cursoID)
+                @Html.HiddenFor(model => model.universidadeID)
+
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.nome)
+                </div>
+
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.nome)
+                    @Html.ValidationMessageFor(model => model.nome)
+                </div>
+                <!--divisão dos campos -->
+                <div class="editor-label">
+                    <b>Universidade</b>
+                </div>
+                <div>
+                    @Html.DropDownList("listaUniversidade")
+                </div>
+
+                <br />
+
+                <p>
+                    <input class="btn btn-success" type="submit" value="Save" />|
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+                </p>
+            </fieldset>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

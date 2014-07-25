@@ -1,0 +1,32 @@
+﻿@model MvcApplication1.Models.DisciplinaDB
+
+@{
+    ViewBag.Title = "Details";
+}
+<h2>Detalhes</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Disciplina</h2>
+    </div>
+    <div class="acoes panel body">
+        @Html.HiddenFor(model => model.disciplinaID)
+        @Html.HiddenFor(model => model.cursoID)
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.nomeDisciplina)</th>
+                <th>@Html.DisplayNameFor(model => model.nomeCurso)</th>
+                <th>@Html.DisplayNameFor(model => model.nomeUniversidade)</th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(model => model.nomeDisciplina)</td>
+                <td>@Html.DisplayFor(model => model.nomeCurso)</td>
+                <td>@Html.DisplayFor(model => model.nomeUniversidade)</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.disciplinaID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+</p>

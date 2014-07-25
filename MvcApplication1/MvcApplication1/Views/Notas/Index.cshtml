@@ -1,0 +1,77 @@
+﻿@model PagedList.IPagedList<MvcApplication1.Models.NotasDB>
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Cria novo", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Voltar para home", "Index", "Home", null, new { @class = "btn btn-default" })
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Notas</h2>
+    </div>
+    <div class="acoes panel body">
+
+        @using (Html.BeginForm("Index", "Notas", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("busca", ViewBag.filtro as string,new { @class ="busca"})
+                <input type="submit" value="Buscar" class="btn btn-default" />
+            </p>
+        }
+
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Aluno", "Index", new { ordem = ViewBag.aluno, filtro = ViewBag.filtro })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Disciplina", "Index", new { ordem = ViewBag.disciplina, filtro = ViewBag.filtro })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Nota", "Index", new { ordem = ViewBag.nota, filtro = ViewBag.filtro })
+                    </th>
+                    <th>
+                        <!-- Empty -->
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @Html.HiddenFor(modelItem => item.alunoID)
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.alunoNome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.disciplinaNome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nota)
+                        </td>
+                        <td id="td-botoes">
+                            @Html.ActionLink("Detalhar", "Details", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-success" }) 
+                        @Html.ActionLink("Editar", "Edit", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-warning" }) 
+                        @Html.ActionLink("Excluir", "Delete", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            Página 
+            @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            de 
+            @Model.PageCount
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, ordem = ViewBag.ordemCorrente, filtro = ViewBag.filtro }))
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,42 @@
+﻿@model MvcApplication1.Models.DisciplinaDB
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+@Html.AntiForgeryToken()
+
+<h3>Deseja realmente deletar esta disciplina?</h3>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Disciplina</h2>
+    </div>
+    <div class="acoes panel body">
+
+        <table class="table">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.nomeDisciplina)</td>
+                <td>@Html.DisplayFor(model => model.nomeDisciplina)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.nomeCurso)</td>
+                <td>@Html.DisplayFor(model => model.nomeCurso)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.nomeUniversidade)</td>
+                <td>@Html.DisplayFor(model => model.nomeUniversidade)</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+@using (Html.BeginForm("Delete", "disciplina", FormMethod.Post, new { id = Model.disciplinaID }))
+{
+    <p>
+        <input class="btn btn-danger" type="submit" value="Delete" />
+        |
+        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+    </p>
+}

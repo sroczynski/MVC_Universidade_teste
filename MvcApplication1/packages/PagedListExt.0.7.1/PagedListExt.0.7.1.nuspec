@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>PagedListExt</id>
+    <version>0.7.1</version>
+    <title>PagedList for ASP.NET MVC (bootstrap)</title>
+    <authors>Calabonga</authors>
+    <owners>Calabonga</owners>
+    <projectUrl>http://www.calabonga.net/blog/post/53</projectUrl>
+    <iconUrl>http://www.calabonga.net/content/images/nuget_logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>PagedList extension for ASP.NET MVC (razor) with custom html-pager for bootstrap.</description>
+    <releaseNotes>Some bugs fixed for MetroUI Css framework</releaseNotes>
+    <language>en-US</language>
+    <tags>pager pagedlist calabonga extensions ui prev next page pagedlistext mvc asp.net jqueryui bootstrap</tags>
+  </metadata>
+</package>

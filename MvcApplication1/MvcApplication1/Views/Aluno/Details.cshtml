@@ -1,0 +1,39 @@
+﻿@model MvcApplication1.Models.AlunoDB
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes do curso</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Aluno</h2>
+    </div>
+    <div class="acoes panel body">
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.alunoID)</th>
+                <th>@Html.DisplayNameFor(model => model.alunoNome)</th>
+                <th>@Html.DisplayNameFor(model => model.alunoEmail)</th>
+                <th>@Html.DisplayNameFor(model => model.dataNascimento)</th>
+                <th>@Html.DisplayNameFor(model => model.cursoNome)</th>
+                <th>@Html.DisplayNameFor(model => model.universidadeNome)</th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(model => model.alunoID)</td>
+                <td>@Html.DisplayFor(model => model.alunoNome)</td>
+                <td>@Html.DisplayFor(model => model.alunoEmail)</td>
+                <td>@Html.DisplayFor(model => model.dataNascimento.Date)</td>
+                <td>@Html.DisplayFor(model => model.cursoNome)</td>
+                <td>@Html.DisplayFor(model => model.universidadeNome)</td>
+            </tr>
+
+        </table>
+
+
+        <p>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.alunoID }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+        </p>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@model MvcApplication1.Models.UniversidadeDB
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Deseja realmente deletar esta universidade?</h3>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Universidade</h2>
+    </div>
+    <div class="acoes panel body">
+        <table class="table">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.universidadeID):</td>
+                <td>@Html.DisplayFor(model => model.universidadeID)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.nome):</td>
+                <td>@Html.DisplayFor(model => model.nome)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.cidade):</td>
+                <td>@Html.DisplayFor(model => model.cidade)</td>
+            </tr>
+
+        </table>
+
+
+        @using (Html.BeginForm("Delete", "Universidade", FormMethod.Post, new { id = Model.universidadeID }))
+        {
+            <p>
+                <input class="btn btn-danger" type="submit" value="Delete" />
+                |
+        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+            </p>
+        }
+    </div>
+</div>
