@@ -13,6 +13,7 @@ namespace MvcApplication1.Controllers
 {
     public class AlunoController : Controller
     {
+
         //
         // GET: /Aluno/
         AlunoModel al = new AlunoModel();
@@ -103,8 +104,8 @@ namespace MvcApplication1.Controllers
         [HttpPost]
         public ActionResult Edit(AlunoDB alunoEdit, int universidade, int curso)
         {
-            
-            if (verificaSePossuiNota(alunoEdit) || 
+
+            if (verificaSePossuiNota(alunoEdit) ||
                (alunoEdit.universidadeID == universidade && alunoEdit.cursoID == curso))
             {
                 alunoEdit.universidadeID = universidade;
@@ -170,7 +171,7 @@ namespace MvcApplication1.Controllers
             {
                 ViewBag.mensagem = "O aluno possui notas vinculadas, não sendo possível apagar o mesmo antes que suas notas sejam apagadas";
                 return View("NotFound");
-            } 
+            }
 
             return RedirectToAction("index");
         }
@@ -189,7 +190,7 @@ namespace MvcApplication1.Controllers
          *********************************************************/
         UniversidadeModel uni = new UniversidadeModel();
         CursoModel cur = new CursoModel();
-        
+
         public int universidadeSelect { get; set; }
 
         // Chamado no Create
@@ -285,7 +286,8 @@ namespace MvcApplication1.Controllers
 
 
 
-        public Boolean verificaSePossuiNota(AlunoDB aluno){
+        public Boolean verificaSePossuiNota(AlunoDB aluno)
+        {
 
             NotasModel notas = new NotasModel();
             var listaNotas = notas.GetAllNotas();
@@ -295,7 +297,7 @@ namespace MvcApplication1.Controllers
             {
                 if (item.alunoID == aluno.alunoID)
                     return false;
-            }                   
+            }
             return true;
         }
 

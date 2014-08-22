@@ -2,10 +2,10 @@
 @using PagedList;
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Notas";
 }
 
-<h2>Index</h2>
+<h2>Notas</h2>
 <p>
     @Html.ActionLink("Cria novo", "Create", null, new { @class = "btn btn-primary" })
     @Html.ActionLink("Voltar para home", "Index", "Home", null, new { @class = "btn btn-default" })
@@ -19,12 +19,12 @@
         @using (Html.BeginForm("Index", "Notas", FormMethod.Get))
         {
             <p>
-                @Html.TextBox("busca", ViewBag.filtro as string,new { @class ="busca"})
+                @Html.TextBox("busca", ViewBag.filtro as string, new { @class = "busca" })
                 <input type="submit" value="Buscar" class="btn btn-default" />
             </p>
         }
 
-        <table>
+        <table class="table table-condensed table-hover">
             <thead>
                 <tr>
                     <th>
@@ -57,9 +57,9 @@
                             @Html.DisplayFor(modelItem => item.nota)
                         </td>
                         <td id="td-botoes">
-                            @Html.ActionLink("Detalhar", "Details", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-success" }) 
-                        @Html.ActionLink("Editar", "Edit", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-warning" }) 
-                        @Html.ActionLink("Excluir", "Delete", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Detalhar", "Details", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-default btn-sm" })
+                            @Html.ActionLink("Editar", "Edit", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-default btn-sm" })
+                            @Html.ActionLink("Excluir", "Delete", new { alunoID = item.alunoID, disciplinaID = item.disciplinaID }, new { @class = "btn btn-default btn-sm" })
                         </td>
                     </tr>
                 }

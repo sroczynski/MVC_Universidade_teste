@@ -204,7 +204,6 @@ namespace MvcApplication1.Controllers
             alunoSelect = 0;
 
             itens.Add(new SelectListItem { Text = "Selecione...", Value = 0.ToString(), Selected = false });
-
             foreach (var item in alunos)
             {
                 if (alunoSelect == 0)

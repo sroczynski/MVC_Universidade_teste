@@ -3,10 +3,10 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cursos";
 }
 
-<h2>Index</h2>
+<h2>Cursos</h2>
 
 <p>
     @Html.ActionLink("Criar novo curso", "Create", null, new { @class = "btn btn-primary" })
@@ -21,12 +21,12 @@
         @using (Html.BeginForm("Index", "Curso", FormMethod.Get))
         {
             <p>
-                @Html.TextBox("busca", ViewBag.filtro as string,new { @class ="busca"})
+                @Html.TextBox("busca", ViewBag.filtro as string, new { @class = "busca" })
                 <input type="submit" value="Buscar" class="btn btn-default" />
             </p>
         }
 
-        <table class="table">
+        <table class="table table-condensed table-hover">
             <tr>
                 <th>
                     @Html.ActionLink("Curso", "Index", new { ordem = ViewBag.curso, filtro = ViewBag.filtro })
@@ -49,9 +49,9 @@
                         @Html.DisplayFor(modelItem => item.universidadeNome)
                     </td>
                     <td id="td-botoes">
-                        @Html.ActionLink("Detalhar", "Details", new { id = item.cursoID }, new { @class = "btn btn-success" }) 
-                        @Html.ActionLink("Editar", "Edit", new { id = item.cursoID }, new { @class = "btn btn-warning" }) 
-                        @Html.ActionLink("Excluir", "Delete", new { id = item.cursoID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Detalhar", "Details", new { id = item.cursoID }, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.cursoID }, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Excluir", "Delete", new { id = item.cursoID }, new { @class = "btn btn-default btn-sm" })
                     </td>
                 </tr>
             }

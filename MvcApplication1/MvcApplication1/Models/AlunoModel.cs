@@ -183,8 +183,11 @@ namespace MvcApplication1.Models
             aluno.cursoID = cursoID;
 
             db.Aluno.Add(aluno);
-            db.SaveChanges();
-
+            
+            /*
+             *  TODO:
+             */
+            db.SaveChanges(new Log.User("Nicolas"));
         }
         // Alterar um aluno
         public void update(int alunoID, string nome, string email, DateTime dataNascimento, int cursoID)
@@ -207,7 +210,7 @@ namespace MvcApplication1.Models
                 db.Entry(aluno).Property("dataNascimento").IsModified = true;
                 db.Entry(aluno).Property("cursoID").IsModified = true;
 
-                db.SaveChanges();
+                db.SaveChanges(new Log.User("Nicolas"));
             }
         }
 
@@ -217,7 +220,7 @@ namespace MvcApplication1.Models
             Aluno aluno = new Aluno();
             aluno = db.Aluno.Find(alunoID);
             db.Aluno.Remove(aluno);
-            db.SaveChanges();
+            db.SaveChanges(new Log.User("Nicolas"));
         }
 
     }

@@ -34,3 +34,6 @@ D:\Aplicacao\MvcApplication1\MvcApplication1\bin\System.Web.WebPages.Razor.xml
 D:\Aplicacao\MvcApplication1\MvcApplication1\obj\Debug\MvcApplication1.dll
 D:\Aplicacao\MvcApplication1\MvcApplication1\obj\Debug\MvcApplication1.pdb
 D:\Aplicacao\MvcApplication1\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
+D:\Aplicacao\MvcApplication1\MvcApplication1\bin\EntityFramework.SqlServer.dll
+D:\Aplicacao\MvcApplication1\MvcApplication1\bin\FrameLog.dll
+D:\Aplicacao\MvcApplication1\MvcApplication1\bin\EntityFramework.SqlServer.xml

@@ -3,10 +3,10 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Disciplinas";
 }
 
-<h2>Index</h2>
+<h2>Disciplinas</h2>
 <p>
     @Html.ActionLink("Criar nova disciplina", "Create", null, new { @class = "btn btn-primary" })
     @Html.ActionLink("Voltar para home", "Index", "Home", null, new { @class = "btn btn-default" })
@@ -25,7 +25,7 @@
             </p>
         }
 
-        <table class="table">
+        <table class="table table-condensed table-hover">
             <tr>
 
                 <th>
@@ -55,9 +55,9 @@
                         @Html.DisplayFor(modelItem => item.nomeCurso)
                     </td>
                     <td id="td-botoes">
-                        @Html.ActionLink("Detalhar", "Details", new { id = item.disciplinaID }, new { @class = "btn btn-success" }) 
-                        @Html.ActionLink("Editar", "Edit", new { id = item.disciplinaID }, new { @class = "btn btn-warning" }) 
-                        @Html.ActionLink("Excluir", "Delete", new { id = item.disciplinaID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Detalhar", "Details", new { id = item.disciplinaID }, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.disciplinaID }, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Excluir", "Delete", new { id = item.disciplinaID }, new { @class = "btn btn-default btn-sm" })
                     </td>
                 </tr>
             }

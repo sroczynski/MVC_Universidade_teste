@@ -7,19 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using FrameLog;
+using FrameLog.Contexts;
+using FrameLog.History;
+using FrameLog.Models;
+using MvcApplication1.Log;
+using MvcApplication1.Log.Tabelas;
+using System;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+
 namespace MvcApplication1
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    
     public partial class DBEntities : DbContext
     {
+        //public DBEntities()
+        //    : base("name=DBEntities")
+        //{
+        //}
+
+        public readonly FrameLogModule<ChangeSet, User> Logger;
+
+
         public DBEntities()
-            : base("name=DBEntities")
         {
+            Logger = new FrameLogModule<ChangeSet, User>(new ChangeSetFactory(), new DBEntitiesAdapter(this));
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -30,5 +45,79 @@ namespace MvcApplication1
         public DbSet<Disciplina> Disciplina { get; set; }
         public DbSet<Notas> Notas { get; set; }
         public DbSet<Universidade> Universidade { get; set; }
+        // Dados Log
+        public DbSet<ChangeSet> ChangeSets { get; set; }
+        public DbSet<ObjectChange> ObjectChanges { get; set; }
+        public DbSet<PropertyChange> PropertyChanges { get; set; }
+
+        public IFrameLogContext<ChangeSet, User> FrameLogContext
+        {
+            get { return new DBEntitiesAdapter(this); }
+        }
+
+        public HistoryExplorer<ChangeSet, User> HistoryExplorer
+        {
+            get { return new HistoryExplorer<ChangeSet, User>(FrameLogContext); }
+        }
+        
+        public void SaveChanges(User autor)
+        {
+            try
+            {
+                this.ChangeSets.Create();
+                this.ObjectChanges.Create();
+                this.PropertyChanges.Create();
+            }
+            finally
+            {
+
+                Logger.SaveChanges(autor);
+            }
+        }
+
+        [Obsolete]
+        public override int SaveChanges()
+        {
+            return base.SaveChanges();
+        }
+    
     }
+
+
+    public class DBEntitiesAdapter : DbContextAdapter<ChangeSet, User>
+    {
+        private DBEntities context;
+
+        public DBEntitiesAdapter(DBEntities context) : base(context)
+        {
+            this.context = context;
+        }
+
+        public override IQueryable<IChangeSet<User>> ChangeSets
+        {
+            get { return context.ChangeSets; }
+        }
+
+        public override IQueryable<IObjectChange<User>> ObjectChanges
+        {
+            get { return context.ObjectChanges; }
+        }
+
+        public override IQueryable<IPropertyChange<User>> PropertyChanges
+        {
+            get { return context.PropertyChanges; }
+        }
+
+        public override void AddChangeSet(ChangeSet changeSet)
+        {
+            context.ChangeSets.Add(changeSet);
+        }
+
+        public override Type UnderlyingContextType
+        {
+            get { return typeof(DBEntities); }
+        }
+    }
+
+
 }

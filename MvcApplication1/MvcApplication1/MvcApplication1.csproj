@@ -42,6 +42,16 @@
     <Reference Include="Calabonga.Mvc.PagedListExt">
       <HintPath>..\packages\PagedListExt.0.7.1\lib\net45\Calabonga.Mvc.PagedListExt.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FrameLog">
+      <HintPath>..\packages\FrameLog.1.4.3\lib\net40\FrameLog.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -51,7 +61,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -70,9 +79,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -143,6 +149,7 @@
     <Compile Include="Controllers\AlunoController.cs" />
     <Compile Include="Controllers\CursoController.cs" />
     <Compile Include="Controllers\DisciplinaController.cs" />
+    <Compile Include="Controllers\ExemplosLivroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NotasController.cs" />
     <Compile Include="Controllers\UniversidadeController.cs" />
@@ -167,6 +174,12 @@
     <Compile Include="Disciplina.cs">
       <DependentUpon>DBAlunos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Log\Tabelas\ChangeSet.cs" />
+    <Compile Include="Log\ChangeSetFactory.cs" />
+    <Compile Include="Log\LogDataBase.cs" />
+    <Compile Include="Log\Tabelas\ObjectChange.cs" />
+    <Compile Include="Log\Tabelas\PropertyChange.cs" />
+    <Compile Include="Log\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -344,7 +357,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>4016</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:1807/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -9,7 +9,8 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div id="geral">
+
+    <div class="container-fluid">
         <div id="top">
             <h3>@Html.ActionLink("MVC", "Index", "Home")</h3>
         </div>
@@ -19,7 +20,7 @@
                     <li>
                         @Html.ActionLink("Página Inicial", "Index", "Home")
                     </li>
-                    
+
                     <li>
                         @Html.ActionLink("Alunos", "Index", "Aluno")
                     </li>
@@ -38,11 +39,15 @@
                 </ul>
             </div>
         </nav>
-        <div id="views" class="row-fluid">
 
-            @RenderBody()
 
-        </div>
+        @RenderBody()
+
+
+        @*<div id="qunit"></div>
+        <div id="qunit-ixture"></div>
+         Import qunit 
+        <script src="~/Scripts/"></script>*@
 
         <footer>
             <p></p>

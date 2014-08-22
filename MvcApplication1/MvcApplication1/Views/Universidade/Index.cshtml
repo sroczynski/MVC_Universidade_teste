@@ -4,8 +4,9 @@
 
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Universidade";
 }
+<h2>Universidades</h2>
 <p>
     @Html.ActionLink("Nova universidade", "Create", null, new { @class = "btn btn-primary" })
     @Html.ActionLink("Voltar para Home", "Index", "Home", null, new { @class = "btn btn-default" })
@@ -18,12 +19,12 @@
         @using (Html.BeginForm("Index", "Universidade", FormMethod.Get))
         {
             <p>
-                @Html.TextBox("busca", ViewBag.filtro as string,new { @class ="busca"})
+                @Html.TextBox("busca", ViewBag.filtro as string, new { @class = "busca" })
                 <input type="submit" value="Buscar" class="btn btn-default" />
             </p>
         }
         <br />
-        <table class="table">
+        <table class="table table-condensed table-hover">
             <tr>
                 <th>
                     @Html.ActionLink("Nome", "Index", new { ordem = ViewBag.nome, filtro = ViewBag.filtro })
@@ -46,9 +47,9 @@
                         @Html.DisplayFor(modelItem => item.cidade)
                     </td>
                     <td id="td-botoes">
-                        @Html.ActionLink("Detalhar", "Details", new { id = item.universidadeID }, new { @class = "btn btn-success" })
-                        @Html.ActionLink("Editar", "Edit", new { id = item.universidadeID }, new { @class = "btn btn-warning" })
-                        @Html.ActionLink("Excluir", "Delete", new { id = item.universidadeID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Detalhar", "Details", new { id = item.universidadeID }, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.universidadeID }, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Excluir", "Delete", new { id = item.universidadeID }, new { @class = "btn btn-default btn-sm" })
                     </td>
                 </tr>
             }

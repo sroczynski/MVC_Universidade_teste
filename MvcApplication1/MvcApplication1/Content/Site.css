@@ -126,7 +126,7 @@ html a:hover {
 
 .busca {
     width:150px;
-    transition: width 1s;
+    transition: width 0.3s;
 }
 .busca:focus{
     width:250px;
