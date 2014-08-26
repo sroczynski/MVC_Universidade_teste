@@ -13,6 +13,12 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
+
+            var db = new DBEntities();
+            db.Database.CreateIfNotExists();
+
+            System.Diagnostics.Debug.Write("Início");
+
             return View();
         }
 

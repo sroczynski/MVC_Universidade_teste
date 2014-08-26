@@ -1,39 +1,56 @@
-﻿@model MvcApplication1.Models.AlunoDB
+﻿@model IEnumerable<MvcApplication1.Models.LogModel>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Log";
+}
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Alterado por</th>
+                <th>Alterado em</th>
+                <th>Nome</th>
+                <th>Data de Nascimento</th>
+                <th>Email</th>
+                <th>Curso</th>
+                <th>Universidade</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{int i = 1;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Autor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Horario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Aluno)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AlunoNascimento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AlunoEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Curso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Universidade)
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
 }
 
-<h2>Detalhes do curso</h2>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Aluno</h2>
-    </div>
-    <div class="acoes panel body">
-        <table class="table">
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.alunoID)</th>
-                <th>@Html.DisplayNameFor(model => model.alunoNome)</th>
-                <th>@Html.DisplayNameFor(model => model.alunoEmail)</th>
-                <th>@Html.DisplayNameFor(model => model.dataNascimento)</th>
-                <th>@Html.DisplayNameFor(model => model.cursoNome)</th>
-                <th>@Html.DisplayNameFor(model => model.universidadeNome)</th>
-            </tr>
-            <tr>
-                <td>@Html.DisplayFor(model => model.alunoID)</td>
-                <td>@Html.DisplayFor(model => model.alunoNome)</td>
-                <td>@Html.DisplayFor(model => model.alunoEmail)</td>
-                <td>@Html.DisplayFor(model => model.dataNascimento.Date)</td>
-                <td>@Html.DisplayFor(model => model.cursoNome)</td>
-                <td>@Html.DisplayFor(model => model.universidadeNome)</td>
-            </tr>
 
-        </table>
-
-
-        <p>
-            @Html.ActionLink("Editar", "Edit", new { id = Model.alunoID }, new { @class = "btn btn-primary" }) |
-            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
-        </p>
-    </div>
-</div>

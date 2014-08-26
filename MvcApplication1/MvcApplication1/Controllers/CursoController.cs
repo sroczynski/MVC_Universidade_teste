@@ -115,20 +115,14 @@ namespace MvcApplication1.Controllers
          */
         public ActionResult Details(int id)
         {
-            var todos = cm.GetAllCursos();
-            var model = (from p in todos.Where(x => x.cursoID == id)
-                         select p).FirstOrDefault();
-            if (model == null)
+            var log = cm.Log(id);
+            
+            if (log == null)
                 return View("NotFound");
 
-            return View(model);
+            return PartialView(log);
 
         }
-
-
-
-
-
 
         /* 
          * Deletar

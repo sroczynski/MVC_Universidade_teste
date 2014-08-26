@@ -15,9 +15,9 @@ namespace MvcApplication1.Log
 
         public IObjectChange<User> ObjectChange()
         {
-            var o = new ObjectChange();
-            o.PropertyChanges = new List<PropertyChange>();
-            return o;
+            var obj = new ObjectChange();
+            obj.PropertyChanges = new List<PropertyChange>();
+            return obj;
         }
 
         public IPropertyChange<User> PropertyChange()

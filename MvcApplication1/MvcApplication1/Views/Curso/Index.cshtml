@@ -46,10 +46,10 @@
                         @Html.DisplayFor(modelItem => item.nome)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.universidadeNome)
+                        @Html.DisplayFor(modelItem => item.UniversidadeNome)
                     </td>
                     <td id="td-botoes">
-                        @Html.ActionLink("Detalhar", "Details", new { id = item.cursoID }, new { @class = "btn btn-default btn-sm" })
+                        @Ajax.ActionLink("Log", "Details", new { id = item.cursoID }, new AjaxOptions() { HttpMethod = "GET", OnSuccess = "retornoLog" }, new { @class = "detalhar btn btn-default btn-sm" })
                         @Html.ActionLink("Editar", "Edit", new { id = item.cursoID }, new { @class = "btn btn-default btn-sm" })
                         @Html.ActionLink("Excluir", "Delete", new { id = item.cursoID }, new { @class = "btn btn-default btn-sm" })
                     </td>
@@ -66,4 +66,21 @@
         </div>
     </div>
 </div>
-
+    @* Modal de detalhes *@
+<!-- Small modal -->
+<div class="detalhes modal fade" id="detalhes" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="margin-top: 10%;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Log</h4>
+            </div>
+            <div class="modal-body">
+                @{Html.RenderPartial("Details", new List<MvcApplication1.Models.LogModel>());}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>

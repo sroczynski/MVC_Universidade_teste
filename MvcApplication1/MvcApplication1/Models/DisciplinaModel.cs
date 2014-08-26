@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using MvcApplication1.Tabelas;
+using MvcApplication1.Log;
 
 namespace MvcApplication1.Models
 {
@@ -15,12 +17,54 @@ namespace MvcApplication1.Models
 
         //Objeto da entidade
         private DBEntities db = new DBEntities();
-        // String de conexão
-        ConnectionStringSettings getString = new ConnectionStringSettings("TESTE", "Data Source=localhost\\SQLEXPRESS;Initial Catalog=TESTE;Integrated Security=True");
+
+        // Criado para teste
+        public User UserDefault()
+        {
+
+            User user = db.User.FirstOrDefault();
+            if (user == null)
+            {
+                user = new User();
+                user.Name = "Nicolas";
+                db.User.Add(user);
+                db.Save(user);
+            }
+            return user;
+        }
+
+        public List<LogModel> Log(int id)
+        {
+            List<LogModel> log = new List<LogModel>();
+
+            Disciplinas disciplina = new Disciplinas();
+            disciplina = db.Disciplinas.Find(id);
+
+            var changes = db.HistoryExplorer.ChangesTo(disciplina);
+
+            foreach (var change in changes)
+            {
+                LogModel dis = new LogModel();
+                dis.Autor = change.Author.ToString();
+                dis.Horario = change.Timestamp;
+                dis.Curso = change.Value.Nome;
+                dis.Disciplina = change.Value.Nome;
+
+                int curId = change.Value.CursoId;
+                var cursoTab = db.Cursos.Find(curId);
+                dis.Curso = cursoTab.Nome;
+
+                dis.Universidade = db.Universidades.Find(cursoTab.UniversidadeId).Nome;
+
+                log.Add(dis);
+            }
+            return log.OrderBy(x => x.Horario).ToList();
+        }
+
 
         public List<DisciplinaDB> GetAllDisciplinas(string ordem, string busca, string filtro, int? pagina)
         {
-            var disciplinas = from dis in db.Disciplina select dis;
+            var disciplinas = from dis in db.Disciplinas select dis;
 
             if (disciplinas != null)
             {
@@ -31,12 +75,12 @@ namespace MvcApplication1.Models
                 {
                     DisciplinaDB dis = new DisciplinaDB();
 
-                    dis.disciplinaID = item.disciplinaID;
-                    dis.nomeDisciplina = item.nome;
-                    dis.cursoID = item.cursoID;
-                    dis.nomeCurso = item.Curso.nome;
-                    dis.universidadeID = item.Curso.Universidade.universidadeID;
-                    dis.nomeUniversidade = item.Curso.Universidade.nome;
+                    dis.disciplinaID = item.DisciplinaId;
+                    dis.nomeDisciplina = item.Nome;
+                    dis.cursoID = item.CursoId;
+                    dis.nomeCurso = item.Curso.Nome;
+                    dis.universidadeID = item.Curso.Universidades.UniversidadeId;
+                    dis.nomeUniversidade = item.Curso.Universidades.Nome;
 
                     lista.Add(dis);
                 }
@@ -79,7 +123,7 @@ namespace MvcApplication1.Models
 
         public List<DisciplinaDB> GetAllDisciplinas()
         {
-            var disciplinas = db.Disciplina.ToList();
+            var disciplinas = db.Disciplinas.ToList();
 
             if (disciplinas != null)
             {
@@ -89,12 +133,12 @@ namespace MvcApplication1.Models
                 {
                     DisciplinaDB dis = new DisciplinaDB();
 
-                    dis.disciplinaID = item.disciplinaID;
-                    dis.nomeDisciplina = item.nome;
-                    dis.cursoID = item.cursoID;
-                    dis.nomeCurso = item.Curso.nome;
-                    dis.universidadeID = item.Curso.Universidade.universidadeID;
-                    dis.nomeUniversidade = item.Curso.Universidade.nome;
+                    dis.disciplinaID = item.DisciplinaId;
+                    dis.nomeDisciplina = item.Nome;
+                    dis.cursoID = item.CursoId;
+                    dis.nomeCurso = item.Curso.Nome;
+                    dis.universidadeID = item.Curso.Universidades.UniversidadeId;
+                    dis.nomeUniversidade = item.Curso.Universidades.Nome;
 
                     lista.Add(dis);
                 }
@@ -105,83 +149,35 @@ namespace MvcApplication1.Models
 
         }
 
-
-        //public List<DisciplinaDB> GetAllDisciplinas()
-        //{
-        //    if (getString != null)
-        //    {
-        //        String query = "select di.disciplinaID as disciplinaID, di.nome as nomeDisciplina, cur.cursoID as cursoID, cur.nome as nomeCurso, un.universidadeID as universidadeID, un.nome as nomeUniversidade from Disciplina di inner join curso cur on di.cursoID = cur.cursoID inner join universidade un on cur.universidadeID = un.universidadeID";
-
-        //        using (SqlConnection conn = new SqlConnection(getString.ConnectionString))
-        //        {
-        //            List<DisciplinaDB> lst = new List<DisciplinaDB>();
-        //            SqlDataReader r = null;
-        //            SqlCommand cmd = new SqlCommand(query, conn);
-        //            conn.Open();
-
-        //            r = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-        //            while (r.Read())
-        //            {
-        //                int disciplinaID = r.GetOrdinal("disciplinaID");
-        //                int nomeDisciplina = r.GetOrdinal("nomeDisciplina");
-        //                int cursoID = r.GetOrdinal("cursoID");
-        //                int nomeCurso = r.GetOrdinal("nomeCurso");
-        //                int universidadeID = r.GetOrdinal("universidadeID");
-        //                int nomeUniversidade = r.GetOrdinal("nomeUniversidade");
-
-        //                // Cria um objeto de cursos
-        //                DisciplinaDB d = new DisciplinaDB();
-
-        //                d.disciplinaID = r.GetInt32(disciplinaID);
-        //                d.cursoID = r.GetInt32(cursoID);
-        //                d.universidadeID = r.GetInt32(universidadeID);
-
-        //                d.nomeDisciplina = r.GetString(nomeDisciplina).ToString();
-        //                d.nomeCurso = r.GetString(nomeCurso).ToString();
-        //                d.nomeUniversidade = r.GetString(nomeUniversidade).ToString();
-
-        //                lst.Add(d);
-        //            }
-        //            return lst;
-        //        }
-        //    }
-        //    return null;
-        //}
-
-
         // Inserir um curso
         public void insert(int curso, string nome)
         {
 
-            Disciplina disciplina = new Disciplina();
-            disciplina.cursoID = curso;
-            disciplina.nome = nome;
+            Disciplinas disciplina = new Disciplinas();
+            disciplina.CursoId = curso;
+            disciplina.Nome = nome;
 
-            db.Disciplina.Add(disciplina);
-            db.SaveChanges();
+            db.Disciplinas.Add(disciplina);
+            db.Save(UserDefault());
 
         }
         // Alterar um curso
         public void update(int disciplinaID, int cursoID, string nome)
         {
-            Disciplina disciplina = db.Disciplina.Find(disciplinaID);
-            disciplina.nome = nome;
-            disciplina.cursoID = cursoID;
+            Disciplinas disciplina = db.Disciplinas.Find(disciplinaID);
+            disciplina.Nome = nome;
+            disciplina.CursoId = cursoID;
 
-            db.Disciplina.Attach(disciplina);
-            db.Entry(disciplina).Property("nome").IsModified = true;
-            db.Entry(disciplina).Property("cursoID").IsModified = true;
-            db.SaveChanges();
+            db.Save(UserDefault());
         }
 
         // excluir um curso
         public void delete(int disciplinaID)
         {
-            Disciplina disciplina = new Disciplina();
-            disciplina = db.Disciplina.Find(disciplinaID);
-            db.Disciplina.Remove(disciplina);
-            db.SaveChanges();
+            Disciplinas disciplina = new Disciplinas();
+            disciplina = db.Disciplinas.Find(disciplinaID);
+            db.Disciplinas.Remove(disciplina);
+            db.Save(UserDefault());
         }
     }
 
@@ -200,4 +196,7 @@ namespace MvcApplication1.Models
 
     }
 
+    public partial class LogModel{
+        public string Disciplina { get; set; }
+    }
 }

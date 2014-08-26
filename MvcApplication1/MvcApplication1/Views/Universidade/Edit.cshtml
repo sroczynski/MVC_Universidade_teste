@@ -1,52 +1,49 @@
 ﻿@model MvcApplication1.Models.UniversidadeDB
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar";
 }
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Universidade</h2>
+        </div>
+        <div class="acoes panel body">
+            @using (Html.BeginForm("Edit", "Universidade", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
 
-<h2>Edit</h2>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Universidade</h2>
-    </div>
-    <div class="acoes panel body">
-        @using (Html.BeginForm("Edit", "Universidade", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+                <fieldset>
+                    <legend>Editar</legend>
 
-            <fieldset>
-                <legend>curso</legend>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.nome, "Nome")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.nome, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.nome)
+                    </div>
 
-                @Html.HiddenFor(model => model.universidadeID)
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.cidade, "Cidade")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.cidade, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.cidade)
+                    </div>
+                    <br />
+                    <p>
+                        <input class="btn btn-primary" type="submit" value="Create" />
+                        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+                    </p>
+                </fieldset>
+            }
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.nome)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.nome)
-                    @Html.ValidationMessageFor(model => model.nome)
-                </div>
-
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.cidade)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.cidade)
-                    @Html.ValidationMessageFor(model => model.cidade)
-                </div>
-                <br />
-
-                <p>
-                    <input class="btn btn-success" type="submit" value="Save" />|
-            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
-                </p>
-            </fieldset>
-        }
+        </div>
     </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-

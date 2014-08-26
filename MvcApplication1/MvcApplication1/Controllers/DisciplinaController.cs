@@ -119,13 +119,11 @@ namespace MvcApplication1.Controllers
          */
         public ActionResult Details(int id)
         {
-            var todos = di.GetAllDisciplinas();
-            var model = (from p in todos.Where(x => x.disciplinaID == id)
-                         select p).FirstOrDefault();
-            if (model == null)
+            var log = di.Log(id);
+            if (log == null)
                 return View("NotFound");
 
-            return View(model);
+            return PartialView(log);
 
         }
 

@@ -12,7 +12,7 @@ namespace MvcApplication1.Log.Tabelas
         public int Id { get; set; }
         public string TypeName { get; set; }
         public string ObjectReference { get; set; }
-        public ChangeSet ChangeSet { get; set; }
+        public virtual ChangeSet ChangeSet { get; set; }
         public virtual List<PropertyChange> PropertyChanges { get; set; }
 
         IEnumerable<IPropertyChange<User>> IObjectChange<User>.PropertyChanges

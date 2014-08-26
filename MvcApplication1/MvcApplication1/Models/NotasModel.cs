@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Configuration;
 using System.ComponentModel.DataAnnotations;
+using MvcApplication1.Tabelas;
 
 namespace MvcApplication1.Models
 {
@@ -28,12 +29,12 @@ namespace MvcApplication1.Models
                 {
                     NotasDB not = new NotasDB();
 
-                    not.alunoID = item.alunoID;
-                    not.nota = item.nota;
-                    not.disciplinaID = item.disciplinaID;
+                    not.alunoID = item.AlunoId;
+                    not.nota = item.Nota;
+                    not.disciplinaID = item.DisciplinaId;
 
-                    not.alunoNome = item.Aluno.nome;
-                    not.disciplinaNome = item.Disciplina.nome;
+                    not.alunoNome = item.Alunos.Nome;
+                    not.disciplinaNome = item.Disciplina.Nome;
 
                     lista.Add(not);
                 }
@@ -88,12 +89,12 @@ namespace MvcApplication1.Models
                 {
                     NotasDB not = new NotasDB();
 
-                    not.alunoID = item.alunoID;
-                    not.nota = item.nota;
-                    not.disciplinaID = item.disciplinaID;
+                    not.alunoID = item.AlunoId;
+                    not.nota = item.Nota;
+                    not.disciplinaID = item.DisciplinaId;
                     
-                    not.alunoNome = item.Aluno.nome;
-                    not.disciplinaNome = item.Disciplina.nome;
+                    not.alunoNome = item.Alunos.Nome;
+                    not.disciplinaNome = item.Disciplina.Nome;
 
                     lista.Add(not);
                 }
@@ -104,56 +105,7 @@ namespace MvcApplication1.Models
         }
         
         
-        //public List<NotasDB> GetAllNotas()
-        //{
-
-        //    ConnectionStringSettings getString = WebConfigurationManager.ConnectionStrings["TESTE"] as ConnectionStringSettings;
-        //    // Teste feito pelo fato da instrução acima não retornar corretamente o nome e o connectionString do banco.
-        //    if (getString == null)
-        //    {
-        //        ConnectionStringSettings tst = new ConnectionStringSettings("TESTE", "Data Source=localhost\\SQLEXPRESS;Initial Catalog=TESTE;Integrated Security=True");
-        //        getString = tst;
-        //    }
-
-        //    if (getString != null)
-        //    {
-        //        String query = "select al.alunoID as alunoID, al.nome as NomeAluno,di.disciplinaID as disciplinaID, di.nome as NomeDisciplina, no.nota as Nota from notas no inner join aluno al on no.alunoID = al.alunoID inner join disciplina di on no.disciplinaID = di.disciplinaID";
-
-        //        using (SqlConnection conn = new SqlConnection(getString.ConnectionString))
-        //        {
-        //            List<NotasDB> lst = new List<NotasDB>();
-        //            SqlDataReader r = null;
-        //            SqlCommand cmd = new SqlCommand(query, conn);
-        //            conn.Open();
-
-        //            r = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-
-        //            while (r.Read())
-        //            {
-        //                int alunoID = r.GetOrdinal("alunoID");
-        //                int NomeAluno = r.GetOrdinal("NomeAluno");
-        //                int disciplinaID = r.GetOrdinal("disciplinaID");
-        //                int NomeDisciplina = r.GetOrdinal("NomeDisciplina");
-        //                int Nota = r.GetOrdinal("Nota");
-
-        //                // Cria um objeto de notas
-        //                NotasDB n = new NotasDB();
-
-        //                n.alunoID = r.GetInt32(alunoID);
-        //                n.alunoNome = r.GetString(NomeAluno).ToString();
-        //                n.disciplinaID = r.GetInt32(disciplinaID);
-        //                n.disciplinaNome = r.GetString(NomeDisciplina).ToString();
-        //                n.nota = r.GetInt32(Nota);
-
-        //                lst.Add(n);
-        //            }
-        //            return lst;
-        //        }
-        //    }
-
-        //    return null;
-        //}
+        
         // Inserir uma nota
 
         public void insert(int alunoID, int disciplinaID, int nota)
@@ -161,12 +113,12 @@ namespace MvcApplication1.Models
             try
             {
                 Notas notas = new Notas();
-                notas.alunoID = alunoID;
-                notas.disciplinaID = disciplinaID;
-                notas.nota = nota;
+                notas.AlunoId = alunoID;
+                notas.DisciplinaId = disciplinaID;
+                notas.Nota = nota;
 
                 db.Notas.Add(notas);
-                db.SaveChanges();
+                //db.Save(new Log.User("Nicolas"));
             }
             catch (Exception)
             {
@@ -179,23 +131,21 @@ namespace MvcApplication1.Models
         public void update(int alunoID, int disciplinaID, int nota)
         {
             Notas notas = db.Notas.Find(alunoID, disciplinaID);
-            notas.nota = nota;
+            notas.Nota = nota;
 
             db.Notas.Attach(notas);
-            db.Entry(notas).Property("nota").IsModified = true;
+            db.Entry(notas).Property("Nota").IsModified = true;
 
-            db.SaveChanges();
+            //db.Save(new Log.User("Nicolas"));
         }
 
         // excluir uma nota
         public void delete(int alunoID, int disciplinaID)
         {
-
             Notas notas = new Notas();
             notas = db.Notas.Find(alunoID, disciplinaID);
             db.Notas.Remove(notas);
-            db.SaveChanges();
-
+            //db.Save(new Log.User("Nicolas"));
         }
 
     }

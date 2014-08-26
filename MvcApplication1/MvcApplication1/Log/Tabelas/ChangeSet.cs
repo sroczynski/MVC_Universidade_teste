@@ -9,7 +9,7 @@ namespace MvcApplication1.Log.Tabelas
     {
         public int Id { get; set; }
         public DateTime Timestamp { get; set; }
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
         public virtual List<ObjectChange> ObjectChanges { get; set; }
 
         IEnumerable<IObjectChange<User>> IChangeSet<User>.ObjectChanges
@@ -22,11 +22,9 @@ namespace MvcApplication1.Log.Tabelas
             ObjectChanges.Add((ObjectChange)objectChange);
         }
 
-
-
         public override string ToString()
         {
-            return string.Format("By {0} on {1}, with {2} ObjectChanges",
+            return string.Format("Por {0} em {1}, com {2} ObjectChanges",
                 Author, Timestamp, ObjectChanges.Count);
         }
     }

@@ -6,15 +6,12 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    
 </head>
 <body>
 
-    <div class="container-fluid">
-        <div id="top">
-            <h3>@Html.ActionLink("MVC", "Index", "Home")</h3>
-        </div>
-        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <nav class="navbar navbar-inverse" role="navigation">
             <div class="collapse navbar-collapse" id="bar1">
                 <ul class="nav navbar-nav">
                     <li>
@@ -55,7 +52,12 @@
     </div>
 
 
+
+
+
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/DDL")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

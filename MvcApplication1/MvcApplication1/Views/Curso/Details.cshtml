@@ -1,31 +1,44 @@
-﻿@model MvcApplication1.Models.CursoDB
+﻿@model IEnumerable<MvcApplication1.Models.LogModel>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Log";
+}
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Alterado por</th>
+                <th>Alterado em</th>
+                <th>Nome</th>
+                <th>Universidade</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{int i = 1;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Autor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Horario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Curso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Universidade)
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
 }
 
-<h2>Detalhes do curso</h2>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">curso</h2>
-    </div>
-    <div class="acoes panel body">
-        <table class="table">
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.cursoID)</th>
-                <th>@Html.DisplayNameFor(model => model.nome)</th>
-                <th>@Html.DisplayNameFor(model => model.universidadeNome)</th>
-            </tr>
-            <tr>
-                <td>@Html.DisplayFor(model => model.cursoID)</td>
-                <td>@Html.DisplayFor(model => model.nome)</td>
-                <td>@Html.DisplayFor(model => model.universidadeNome)</td>
-            </tr>
 
-        </table>
-    </div>
-</div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.cursoID }, new { @class = "btn btn-primary" }) |
-    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
-</p>

@@ -4,51 +4,50 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Curso</h2>
-    </div>
-    <div class="acoes panel body">
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Curso</h2>
+        </div>
+        <div class="acoes panel body">
+            @using (Html.BeginForm("Edit", "Curso", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
 
-        @using (Html.BeginForm("Edit", "Curso", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+                <fieldset>
+                    <legend>Editar</legend>
 
-            <fieldset>
-                <legend>curso</legend>
-
-                @Html.HiddenFor(model => model.cursoID)
-                @Html.HiddenFor(model => model.universidadeID)
+                    @Html.HiddenFor(model => model.cursoID)
+                    @Html.HiddenFor(model => model.universidadeID)
 
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.nome)
-                </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.nome, "Nome:")
+                    </div>
 
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.nome)
-                    @Html.ValidationMessageFor(model => model.nome)
-                </div>
-                <!--divisão dos campos -->
-                <div class="editor-label">
-                    <b>Universidade</b>
-                </div>
-                <div>
-                    @Html.DropDownList("listaUniversidade")
-                </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.nome, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.nome)
+                    </div>
+                    <!--divisão dos campos -->
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.universidadeID, "Universidade:")
+                    </div>
+                    <div>
+                        @Html.DropDownList("listaUniversidade", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
 
-                <br />
+                    <br />
 
-                <p>
-                    <input class="btn btn-success" type="submit" value="Save" />|
+                    <p>
+                        <input class="btn btn-primary" type="submit" value="Salvar" />
             @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
-                </p>
-            </fieldset>
-        }
+                    </p>
+                </fieldset>
+            }
+        </div>
     </div>
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

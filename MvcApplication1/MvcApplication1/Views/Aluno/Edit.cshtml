@@ -1,78 +1,74 @@
 ﻿@model MvcApplication1.Models.AlunoDB
+
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar";
 }
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Disciplina</h2>
+        </div>
+        <div class="acoes panel body">
 
-<h2>Edit</h2>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Aluno</h2>
-    </div>
-    <div class="acoes panel body">
-        @using (Html.BeginForm("Edit", "Aluno", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("Edit", "aluno", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <fieldset>
+                    <legend>Editar</legend>
+                    @Html.HiddenFor(model => model.alunoID)
+                    @Html.HiddenFor(model => model.cursoID)
+                    @Html.HiddenFor(model => model.universidadeID)
 
-            <fieldset>
-                <legend>curso</legend>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.alunoNome, "Nome")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.alunoNome , new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.alunoNome)
+                    </div>
 
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.alunoEmail, "Email")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.alunoEmail, new { @class = "form-control", type = "email" })
+                        @Html.ValidationMessageFor(model => model.alunoEmail)
+                    </div>
 
-                @Html.HiddenFor(model => model.alunoID)
-                @Html.HiddenFor(model => model.cursoID)
-                @Html.HiddenFor(model => model.universidadeID)
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.dataNascimento, "Data de Nascimento")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.dataNascimento, null, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.dataNascimento)
+                    </div>
 
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.universidadeID, "Universidade")
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownList("universidade", null, new { @class = "form-control" })
+                    </div>
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.alunoNome)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.alunoNome)
-                    @Html.ValidationMessageFor(model => model.alunoNome)
-                </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.cursoID, "Curso")
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownList("curso", null, new { @class = "form-control" })
+                    </div>
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.alunoEmail)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.alunoEmail)
-                    @Html.ValidationMessageFor(model => model.alunoEmail)
-                </div>
+                    <br />
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.dataNascimento)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.dataNascimento)
-                    @Html.ValidationMessageFor(model => model.dataNascimento)
-                </div>
-
-                <div class="editor-label">
-                    <b>Universidade</b>
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownList("universidade")
-                </div>
-
-                <div class="editor-label">
-                    <b>curso</b>
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownList("curso")
-                </div>
-                <br />
-                <p>
-                    <input class="btn btn-success" type="submit" value="Save" />
-                    |
-            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
-                </p>
-            </fieldset>
-  
-        }
+                    <p>
+                        <input class="btn btn-primary" type="submit" value="Salvar" />
+                        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+                    </p>
+                </fieldset>
+            }
+        </div>
     </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
 }

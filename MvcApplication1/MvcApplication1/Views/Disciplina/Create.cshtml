@@ -3,61 +3,57 @@
 @{
     ViewBag.Title = "Create";
 }
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Disciplina</h2>
+        </div>
+        <div class="acoes panel body">
+            @using (Html.BeginForm("Create", "disciplina", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
 
-<h2>Criar</h2>
+                @Html.HiddenFor(model => model.cursoID)
+                @Html.HiddenFor(model => model.universidadeID)
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">Disciplina</h2>
-    </div>
-    <div class="acoes panel body">
+                <fieldset>
+                    <legend>Criar</legend>
 
-        @using (Html.BeginForm("Create", "disciplina", FormMethod.Post, new { @class = "form-horizontal" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.nomeDisciplina, "Disciplina")
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.nomeDisciplina, null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.nomeDisciplina)
+                    </div>
 
-            @Html.HiddenFor(model => model.cursoID)
-            @Html.HiddenFor(model => model.universidadeID)
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.universidadeID, "Universidade")
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownList("universidade", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
 
-            <fieldset>
-                <legend>Disciplina DB</legend>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.cursoID, "Curso")
+                    </div>
+                    <div class="editor-field">
+                        @Html.DropDownList("curso", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.nomeDisciplina)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.nomeDisciplina)
-                    @Html.ValidationMessageFor(model => model.nomeDisciplina)
-                </div>
+                    <br />
 
-                <div class="editor-label">
-                    <b>Universidade</b>
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownList("universidade")
-                </div>
+                    <p>
+                        <input class="btn btn-primary" type="submit" value="Criar" />
+                        @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+                    </p>
+                </fieldset>
+            }
 
-                <div class="editor-label">
-                    <b>curso</b>
-                </div>
-
-                <div class="editor-field">
-                    @Html.DropDownList("curso")
-                </div>
-
-                <br />
-
-                <p>
-                    <input class="btn btn-success" type="submit" value="Criar" />
-                    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
-                </p>
-            </fieldset>
-        }
-
+        </div>
     </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

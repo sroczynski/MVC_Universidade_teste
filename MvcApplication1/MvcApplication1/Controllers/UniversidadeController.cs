@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using MvcApplication1.Tabelas;
 
 namespace MvcApplication1.Controllers
 {
@@ -27,9 +28,9 @@ namespace MvcApplication1.Controllers
                 pagina = 1;
             }
             else
-	        {
+            {
                 busca = filtro;
-	        }
+            }
 
             ViewBag.filtro = busca;
 
@@ -43,8 +44,8 @@ namespace MvcApplication1.Controllers
 
             int tamanhoPagina = 5;
             int numPagina = (pagina ?? 1);
-            
-            return View(universidades.ToPagedList(numPagina,tamanhoPagina));
+
+            return View(universidades.ToPagedList(numPagina, tamanhoPagina));
 
         }
 
@@ -75,7 +76,7 @@ namespace MvcApplication1.Controllers
         public ActionResult Edit(int id)
         {
             var todos = un.GetAllUniversidade();
-            var model = (from p in todos.Where(x => x.universidadeID == id)select p).FirstOrDefault();
+            var model = (from p in todos.Where(x => x.universidadeID == id) select p).FirstOrDefault();
             if (model == null)
                 return View("NotFound");
 
@@ -98,14 +99,13 @@ namespace MvcApplication1.Controllers
          */
         public ActionResult Details(int id)
         {
-            var todos = un.GetAllUniversidade();
-            var model = (from p in todos.Where(x => x.universidadeID == id)
-                         select p).FirstOrDefault();
-            if (model == null)
+
+            var log = un.LogUniversidade(id);
+
+            if (log == null)
                 return View("NotFound");
-
-            return View(model);
-
+            
+            return PartialView(log);
         }
 
         /* 

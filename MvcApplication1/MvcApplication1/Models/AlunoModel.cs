@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using MvcApplication1.Tabelas;
+using MvcApplication1.Log;
 
 namespace MvcApplication1.Models
 {
@@ -14,12 +16,53 @@ namespace MvcApplication1.Models
     {
         //Objeto da entidade
         private DBEntities db = new DBEntities();
-        // String de conexão
-        ConnectionStringSettings getString = new ConnectionStringSettings("TESTE", "Data Source=localhost\\SQLEXPRESS;Initial Catalog=TESTE;Integrated Security=True");
+        // Criado para teste
+        public User UserDefault()
+        {
+
+            User user = db.User.FirstOrDefault();
+            if (user == null)
+            {
+                user = new User();
+                user.Name = "Nicolas";
+                db.User.Add(user);
+                db.Save(user);
+            }
+            return user;
+        }
+
+        public List<LogModel> Log(int id)
+        {
+            List<LogModel> log = new List<LogModel>();
+
+            Alunos aluno = new Alunos();
+            aluno = db.Alunos.Find(id);
+
+            var changes = db.HistoryExplorer.ChangesTo(aluno);
+
+            foreach (var change in changes)
+            {
+                LogModel alu = new LogModel();
+                
+                alu.Autor = change.Author.ToString();
+                alu.Horario = change.Timestamp;
+                alu.Aluno = change.Value.Nome;
+                alu.AlunoEmail = change.Value.Email;
+                alu.AlunoNascimento = change.Value.DataNascimento.ToString().Substring(0,10);
+
+                int curId = change.Value.CursoId;
+                var cursoTab = db.Cursos.Find(curId);
+                alu.Curso = cursoTab.Nome;
+                alu.Universidade = db.Universidades.Find(cursoTab.UniversidadeId).Nome;
+
+                log.Add(alu);
+            }
+            return log.OrderBy(x => x.Horario).ToList();
+        }
 
         public List<AlunoDB> GetAllAlunos(string ordem, string busca, string filtro, int? pagina)
         {
-            var alunos = from alu in db.Aluno select alu;
+            var alunos = from alu in db.Alunos select alu;
 
             if (alunos != null)
             {
@@ -30,14 +73,14 @@ namespace MvcApplication1.Models
                 {
                     AlunoDB alu = new AlunoDB();
 
-                    alu.alunoID = item.alunoID;
-                    alu.alunoNome = item.nome;
-                    alu.alunoEmail = item.email;
-                    alu.dataNascimento = item.dataNascimento.Value.Date;
-                    alu.cursoID = item.cursoID;
-                    alu.cursoNome = item.Curso.nome;
-                    alu.universidadeID = item.Curso.Universidade.universidadeID;
-                    alu.universidadeNome = item.Curso.Universidade.nome;
+                    alu.alunoID = item.AlunoId;
+                    alu.alunoNome = item.Nome;
+                    alu.alunoEmail = item.Email;
+                    alu.dataNascimento = item.DataNascimento.Value.Date;
+                    alu.cursoID = item.CursoId;
+                    alu.cursoNome = item.Curso.Nome;
+                    alu.universidadeID = item.Curso.Universidades.UniversidadeId;
+                    alu.universidadeNome = item.Curso.Universidades.Nome;
 
                     lista.Add(alu);
                 }
@@ -45,8 +88,8 @@ namespace MvcApplication1.Models
                 // Carrega para a lista apenas os registro que possuam o indicado na busca
                 if (!String.IsNullOrEmpty(busca))
                     lista = lista.Where(x => x.alunoNome.ToUpper().Contains(busca.ToUpper()) ||
-                                        x.cursoNome.ToUpper().Contains(busca.ToUpper()) ||
-                                        x.universidadeNome.ToUpper().Contains(busca.ToUpper())).ToList();
+                                             x.cursoNome.ToUpper().Contains(busca.ToUpper()) ||
+                                             x.universidadeNome.ToUpper().Contains(busca.ToUpper())).ToList();
                 // Ordena a lista
                 switch (ordem)
                 {
@@ -68,7 +111,6 @@ namespace MvcApplication1.Models
                     case "dataDesc":
                         lista = lista.OrderByDescending(x => x.dataNascimento).ToList();
                         break;
-
                     case "universidadeAsc":
                         lista = lista.OrderBy(x => x.cursoNome).ToList();
                         break;
@@ -94,7 +136,7 @@ namespace MvcApplication1.Models
         public List<AlunoDB> GetAllAlunos()
         {
 
-            var alunos = db.Aluno.ToList();
+            var alunos = db.Alunos.ToList();
 
             if (alunos != null)
             {
@@ -105,14 +147,14 @@ namespace MvcApplication1.Models
                 {
                     AlunoDB alu = new AlunoDB();
 
-                    alu.alunoID = item.alunoID;
-                    alu.alunoNome = item.nome;
-                    alu.alunoEmail = item.email;
-                    alu.dataNascimento = item.dataNascimento.Value.Date;
-                    alu.cursoID = item.cursoID;
-                    alu.cursoNome = item.Curso.nome;
-                    alu.universidadeID = item.Curso.Universidade.universidadeID;
-                    alu.universidadeNome = item.Curso.Universidade.nome;
+                    alu.alunoID = item.AlunoId;
+                    alu.alunoNome = item.Nome;
+                    alu.alunoEmail = item.Email;
+                    alu.dataNascimento = item.DataNascimento.Value.Date;
+                    alu.cursoID = item.CursoId;
+                    alu.cursoNome = item.Curso.Nome;
+                    alu.universidadeID = item.Curso.Universidades.UniversidadeId;
+                    alu.universidadeNome = item.Curso.Universidades.Nome;
 
                     lista.Add(alu);
                 }
@@ -122,105 +164,49 @@ namespace MvcApplication1.Models
             return null;
         }
 
-
-        //public List<AlunoDB> GetAllAlunos()
-        //{
-        //    if (getString != null)
-        //    {
-        //        String query = "select al.alunoID as alunoID, al.nome as alunoNome, al.email as alunoEmail, al.dataNascimento as dataNascimento, c.cursoID as cursoID, c.nome as cursoNome, un.universidadeID as universidadeID, un.nome as universidadeNome from aluno al inner join curso c on al.cursoID = c.cursoID inner join universidade un on c.universidadeID = un.universidadeID order by al.alunoID";
-
-        //        using (SqlConnection conn = new SqlConnection(getString.ConnectionString))
-        //        {
-        //            List<AlunoDB> lst = new List<AlunoDB>();
-        //            SqlDataReader r = null;
-        //            SqlCommand cmd = new SqlCommand(query, conn);
-        //            conn.Open();
-
-        //            r = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-        //            while (r.Read())
-        //            {
-        //                int alunoID = r.GetOrdinal("alunoID");
-        //                int alunoNome = r.GetOrdinal("alunoNome");
-        //                int alunoEmail = r.GetOrdinal("alunoEmail");
-        //                int dataNascimento = r.GetOrdinal("dataNascimento");
-        //                int cursoID = r.GetOrdinal("cursoID");
-        //                int cursoNome = r.GetOrdinal("cursoNome");
-        //                int universidadeID = r.GetOrdinal("universidadeID");
-        //                int universidadeNome = r.GetOrdinal("universidadeNome");
-
-        //                // Cria um objeto de alunos
-        //                AlunoDB a = new AlunoDB();
-
-        //                a.alunoID = r.GetInt32(alunoID);
-        //                a.alunoNome = r.GetString(alunoNome).ToString();
-        //                a.alunoEmail = r.GetString(alunoEmail).ToString();
-        //                a.dataNascimento = r.GetDateTime(dataNascimento);
-        //                a.cursoID = r.GetInt32(cursoID);
-        //                a.cursoNome = r.GetString(cursoNome).ToString();
-        //                a.universidadeID = r.GetInt32(universidadeID);
-        //                a.universidadeNome = r.GetString(universidadeNome).ToString();
-
-        //                lst.Add(a);
-        //            }
-        //            return lst;
-        //        }
-        //    }
-        //    return null;
-        //}
-
-
         // Inserir um aluno
 
         public void insert(string nome, string email, DateTime dataNascimento, int cursoID)
         {
 
-            Aluno aluno = new Aluno();
+            Alunos aluno = new Alunos();
 
-            aluno.nome = nome;
-            aluno.email = email;
-            aluno.dataNascimento = dataNascimento.Date;
-            aluno.cursoID = cursoID;
+            aluno.Nome = nome;
+            aluno.Email = email;
+            aluno.DataNascimento = dataNascimento.Date;
+            aluno.CursoId = cursoID;
 
-            db.Aluno.Add(aluno);
-            
-            /*
-             *  TODO:
-             */
-            db.SaveChanges(new Log.User("Nicolas"));
+            db.Alunos.Add(aluno);
+
+            db.Save(UserDefault());
         }
+
+
         // Alterar um aluno
         public void update(int alunoID, string nome, string email, DateTime dataNascimento, int cursoID)
         {
 
-            Aluno aluno = new Aluno();
-            aluno = db.Aluno.Find(alunoID);
+            Alunos aluno = new Alunos();
+            aluno = db.Alunos.Find(alunoID);
 
             if (aluno != null)
             {
-                aluno.email = email;
-                aluno.nome = nome;
-                aluno.dataNascimento = dataNascimento.Date;
-                aluno.cursoID = cursoID;
+                aluno.Email = email;
+                aluno.Nome = nome;
+                aluno.DataNascimento = dataNascimento.Date;
+                aluno.CursoId = cursoID;
 
-                db.Aluno.Attach(aluno);
-
-                db.Entry(aluno).Property("nome").IsModified = true;
-                db.Entry(aluno).Property("email").IsModified = true;
-                db.Entry(aluno).Property("dataNascimento").IsModified = true;
-                db.Entry(aluno).Property("cursoID").IsModified = true;
-
-                db.SaveChanges(new Log.User("Nicolas"));
+                db.Save(UserDefault());
             }
         }
 
         // excluir um curso
         public void delete(int alunoID)
         {
-            Aluno aluno = new Aluno();
-            aluno = db.Aluno.Find(alunoID);
-            db.Aluno.Remove(aluno);
-            db.SaveChanges(new Log.User("Nicolas"));
+            Alunos aluno = new Alunos();
+            aluno = db.Alunos.Find(alunoID);
+            db.Alunos.Remove(aluno);
+            db.Save(UserDefault());
         }
 
     }
@@ -238,6 +224,7 @@ namespace MvcApplication1.Models
         public string alunoEmail { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Informe a data de nascimento do aluno.")]
         public DateTime dataNascimento { get; set; }
 
         public int cursoID { get; set; }
@@ -249,5 +236,12 @@ namespace MvcApplication1.Models
         public string universidadeNome { get; set; }
 
 
+    }
+
+    public partial class LogModel
+    {
+        public string Aluno { get; set; }
+        public string AlunoEmail { get; set; }
+        public string AlunoNascimento { get; set; }
     }
 }

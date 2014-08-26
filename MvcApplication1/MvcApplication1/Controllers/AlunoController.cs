@@ -128,13 +128,11 @@ namespace MvcApplication1.Controllers
         public ActionResult Details(int id)
         {
 
-            var todos = al.GetAllAlunos();
-            var model = (from p in todos.Where(x => x.alunoID == id)
-                         select p).FirstOrDefault();
-            if (model == null)
+            var log = al.Log(id);
+            if (log == null)
                 return View("NotFound");
 
-            return View(model);
+            return PartialView(log);
 
         }
 

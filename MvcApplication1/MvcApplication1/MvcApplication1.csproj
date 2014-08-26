@@ -139,9 +139,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aluno.cs">
-      <DependentUpon>DBAlunos.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -153,51 +150,30 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NotasController.cs" />
     <Compile Include="Controllers\UniversidadeController.cs" />
-    <Compile Include="Curso.cs">
-      <DependentUpon>DBAlunos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBAlunos.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBAlunos.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBAlunos.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBAlunos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBAlunos.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBAlunos.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Disciplina.cs">
-      <DependentUpon>DBAlunos.tt</DependentUpon>
-    </Compile>
+    <Compile Include="DBEntities.cs" />
     <Compile Include="Log\Tabelas\ChangeSet.cs" />
     <Compile Include="Log\ChangeSetFactory.cs" />
-    <Compile Include="Log\LogDataBase.cs" />
     <Compile Include="Log\Tabelas\ObjectChange.cs" />
     <Compile Include="Log\Tabelas\PropertyChange.cs" />
     <Compile Include="Log\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\NotasModel.cs" />
     <Compile Include="Models\AlunoModel.cs" />
     <Compile Include="Models\CursoModel.cs" />
     <Compile Include="Models\DisciplinaModel.cs" />
     <Compile Include="Models\UniversidadeModel.cs" />
-    <Compile Include="Notas.cs">
-      <DependentUpon>DBAlunos.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Scripts\methods_pt.js" />
     <Content Include="Scripts\js\DDL.js" />
-    <Compile Include="Universidade.cs">
-      <DependentUpon>DBAlunos.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Tabelas\Alunos.cs" />
+    <Compile Include="Tabelas\Cursos.cs" />
+    <Compile Include="Tabelas\Disciplinas.cs" />
+    <Compile Include="Tabelas\Notas.cs" />
+    <Compile Include="Tabelas\Universidades.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -258,23 +234,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <EntityDeploy Include="DBAlunos.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBAlunos.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DBAlunos.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAlunos.edmx</DependentUpon>
-      <LastGenOutput>DBAlunos.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DBAlunos.edmx.diagram">
-      <DependentUpon>DBAlunos.edmx</DependentUpon>
-    </Content>
-    <Content Include="DBAlunos.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBAlunos.edmx</DependentUpon>
-      <LastGenOutput>DBAlunos.cs</LastGenOutput>
-    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -329,8 +288,8 @@
     <Content Include="Views\Universidade\Index.cshtml" />
     <Content Include="Views\Universidade\Create.cshtml" />
     <Content Include="Views\Universidade\Edit.cshtml" />
-    <Content Include="Views\Universidade\Details.cshtml" />
     <Content Include="Views\Universidade\Delete.cshtml" />
+    <Content Include="Views\Universidade\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

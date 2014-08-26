@@ -1,4 +1,18 @@
-﻿
+﻿$(document).ready(
+    $('.detalhar').click(function () {
+
+        //$('#detalhes').modal('show');
+    })
+);
+
+
+function retornoLog(html) {
+    var m = $('.detalhes');
+    m.find('.modal-body').html(html.trim())
+    m.modal('show');
+}
+
+
 
 $(function () {
     $("#aluno").change(function () {
@@ -26,7 +40,7 @@ $(function () {
             dataType: "json",
             type: "POST",
             url: "/Aluno/carregaCurso",
-            data: { universidade: $("#universidade").val()},
+            data: { universidade: $("#universidade").val() },
             success: function (dados) {
                 $("#curso").append("<option value='0'>Selecione...</option>");
                 $(dados).each(function (i) {
